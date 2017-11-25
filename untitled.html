@@ -7,6 +7,13 @@
 	<title> ESSAI d'une simple page dist</title>
 	
 	<style>
+		.pdf-example-wrapper { 
+			background: rgba(0,0,0,.05); 
+			margin: 2rem auto; 
+			padding: 2rem;
+			border: 1px solid rgba(0,0,0,.1);
+			overflow: auto;
+		}
 		
 		div.container {
 			width: 100%;
@@ -14,11 +21,11 @@
 		}
 		
 		header, footer {
-		padding: 1em;
-		color: white;
-		background-color: black;
-		clear: left;
-		text-align: center;
+			padding: 1em;
+			color: white;
+			background-color: black;
+			clear: left;
+			text-align: center;
 		}
 		
 		nav {
@@ -29,7 +36,9 @@
 			padding: 1em;
 		}
 		
-		
+		.pdf object { background: #fff; }
+		.markup { height: 300px; overflow: hidden; padding: 1rem; }
+		textarea { width: 100%; background: #fff; height: 100%; font-size: 1rem; font-family: monospace, sans-serif; margin: 0; padding: 0; overflow: auto; }
 		
 		 
 		
@@ -67,8 +76,17 @@
 				<p>Bari seewoo le labanta ka taa a kungo taa</p> 
 			</nav>
 			
-			<section> 
+			
+
+			<section class="pdf-example-wrapper"> 
 				<h1>deutsche Version</h1>
+				
+				<div class="column-right pdf">
+				<object data="/pdf/mandinka.pdf#page=2" type="application/pdf" width="100%" height="100%">
+   				<p><b>Example fallback content</b>: This browser does not support PDFs. Please download the PDF to view it: <a href="/pdf/mandinka.pdf">Download PDF</a>.</p>
+				</object>
+				</div>
+				
 				<p> Das soll eine Zeile der Übersetzung sein</p>
 				<p> Und genauso fuer diese. Die Frage der Text-Eintragung bleibt aber wie vorhin unberührt.</p> 
 				<a href="mandinka.pdf">Link Text Here</a>
@@ -77,9 +95,28 @@
 			
 			<footer>
 			v 0.2 </footer>
+			
+			
+
+<script>
+/*global ActiveXObject */
+(function (){
+  "use strict";
+  var examples = document.querySelectorAll(".pdf-example-wrapper");
+  for(var i=0; i < examples.length; i++){
+    var markup = document.createElement("div");
+    markup.className = "column-right markup";
+    var html = examples[i].querySelector(".pdf").innerHTML;
+    html = html.replace(/</g, "&lt;");
+    markup.innerHTML = "<textarea>" + html + "</textarea>";
+    examples[i].querySelector(".container").appendChild(markup);
+  }
+})();
+</script>
 
 		</div>
 
 	</body>
 
 </html>
+ 
